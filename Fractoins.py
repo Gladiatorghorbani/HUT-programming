@@ -1,53 +1,33 @@
-str1 = input('Enter the first number:')
-str2 = input('Enter the second number:')
-
-numbers_1, numbers_2 = [],[]
-result = []
-#put numbers in the list
+#add two fractions
+#inout an string like this example
+#str1 = '2/2 2/2'
+str1 = input("Enter the fractions as string:")
+index = []
 for i in range(0, len(str1)):
-    numbers_1.append(int(str1[i]))
+    if str1[i] == '/' or str1[i] == ' ':
+        index.append(i)
+print(str1)
+first_numerator = int(str1[: index[0]])
+first_denominator = int(str1[index[0]+1 : index[1]])
 
-for i in range(0, len(str2)):
-    numbers_2.append(int(str2[i]))
+second_numerator = int(str1[index[1]+1 : index[2]])
+second_denominator = int(str1[index[2] + 1 :])
 
-len1 = len(str1)
-len2 = len(str2)
+class Add():
+    def __init__ (self, numerator, denominator):
+        self.numerator = numerator
+        self.denominator = denominator
 
-numbers_1.reverse()
-numbers_2.reverse()
+    def __add__(self, other):
+        denominator_result = self.denominator * other.denominator
+        numerator_result= self.numerator * other.denominator + self.denominator * other.numerator
+        return Add(numerator_result, denominator_result)
 
-#more digits
-def make_digits_equal(len1, len2):
-    if len1 < len2:
-        for i in range(0, len2 - len1):
-            numbers_1.append(0)
-    elif len1 > len2:
-        for i in range(0, len1 - len2):
-            numbers_2.append(0)
-    else:
-        pass
-make_digits_equal(len1, len2)
-
-print(numbers_1)
-print(numbers_2)
+    def __repr__(self):
+        return (f'{self.numerator}/{self.denominator}')
 
 
-carry = 0
-i = 0
-while True:
-    result.append((numbers_1[i] + numbers_2[i] + carry) % 10)
-    carry = (numbers_1[i] + numbers_2[i]) // 10
 
-    #if len1 > len2:
-    i += 1
-    if i == len1:
-        #if len(result) != len1:
-
-        break
-    #if len1 <= len2:
-
-result.reverse()
-#for i in range(0, len(result)):
-#    print(result[i], end='')
-for i in range(0,len(result)):
-    print(result[i], end='')
+n1 = Add(first_numerator, first_denominator)
+n2 = Add(second_numerator, second_denominator)
+print(n1 + n2)
